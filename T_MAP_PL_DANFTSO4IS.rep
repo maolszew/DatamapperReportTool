@@ -1,0 +1,1236 @@
+------------ RTM Report (3.1.27) ------------
+            Name: T_MAP_PL_DANFTSO4IS.map
+           Title: T_MAP_PL_DANFTSO4IS ([INT] Danfos IFCSUM D01B map to SGI Shipping Order to eSchenker //INPUT //CSC_NAME=utf8 //OUTPUT //CSC_NAME=utf8)
+     Source View: default (default application) PL_MAP_DANFTSO4IS_IN.adf
+Destination View: default (default application) PL_MAP_DANFTSO4IS_OUT.adf
+            Date: Jun 7, 2022 2:01:59 PM
+
+
++--- EDI_D01B_IFCSUM ===D=(Each, Each)===[1]=======>> ShippingOrder
+!	|	First 001: sag_db.Init;
+!	|	First 002: $SV_file_counter = sag_tools.ResolveBracketCode ( "<REF#5>", pgm.$SessionId, pgm.$MessageId);
+!	|	First 003: 
+!	|	First 004: 
+!	|	First 005: DECLARE $INSTANCE_FLAG STRING;
+!	|	First 006: 
+!	|	First 007: IMPORT "INSTANCE_FLAG" INTO $INSTANCE_FLAG;
+!	|	First 008: #Possible values are:
+!	|	First 009: #DEV
+!	|	First 010: #INT
+!	|	First 011: #QA
+!	|	First 012: #PROD
+!	|	Each  001: #$SV_LOG_MODE = "Y";
+!	|	Each  002: $SV_SHIPPING_LINE_TRIGGER = "GID";
+!	|	Each  003: 
+!	|	Each  004: declare $la_params[][] string;
+!	|	Each  005: declare $lv_sql_select string;
+!	|	Each  006: 
+!	|	Each  007: $SV_NAD_CN_COUNTRY = '';
+!	|	Each  008: $SV_NAD_CN_LOCCODE = '';
+!	|	Each  009: $SV_NAD_CZ_COUNTRY = '';
+!	|	Each  010: $SV_NAD_CZ_LOCCODE = '';
+!	|	Each  011: $SV_NAD_DP_COUNTRY = '';
+!	|	Each  012: $SV_NAD_DP_LOCCODE = '';
+!	|	Each  013: $SV_NAD_PW_COUNTRY = '';
+!	|	Each  014: $SV_NAD_PW_LEFT6NAME = '';
+!	|	Each  015: $SV_NAD_PW_LOCCODE = '';
+!	|	Each  016: 
+!	|	Each  017: $SV_GROUPID_TEST = '';
+!	|	Each  018: $SV_GROUPID_PROD = '';
+!	|	Each  019: $SV_SIMSID_TEST = '';
+!	|	Each  020: $SV_SIMSID_PROD = '';
+!	|	Each  021: $SV_ACCESSKEY_TEST = '';
+!	|	Each  022: $SV_ACCESSKEY_PROD = '';
+!	|	Each  023: $SV_MORE_SERVICE_INFO = '';
+!	|	Each  024: $SV_SGI_LOCID = '';
+!	|	Each  025: $SV_PARTNERID_CZ = '';
+!	|	Each  026: $SV_PARTNERID_CN = '';
+!	|	Each  027: $SV_PARTNERID_PW = '';
+!	|	Each  028: $SV_PARTNERID_DP = '';
+!	|	Each  029: $SV_PURPOSE_CODE_RESULT = '';
+!	|	Each  030: 
+!	|	Each  031: $SV_Code = "9"; # @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/TSR/cmp01/e01;
+!	|	Each  032: 
+!	|	Each  033: for $i=1 to 6 # @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP/LastOccurrence
+!	|	Each  034: {
+!	|	Each  035: 	if @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/e01 = "CZ"
+!	|	Each  036: 	{
+!	|	Each  037: 	$SV_NAD_CZ_COUNTRY = @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/e09;
+!	|	Each  038: 	if @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/cmp02/e03 = "ZZZ"
+!	|	Each  039: 	{
+!	|	Each  040: 		$SV_NAD_CZ_LOCCODE = @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/cmp02/e01;
+!	|	Each  041: 	}
+!	|	Each  042: 	}
+!	|	Each  043: 	if @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/e01 = "CN"
+!	|	Each  044: 	{
+!	|	Each  045: 	$SV_NAD_CN_COUNTRY = @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/e09;
+!	|	Each  046: 	if @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/cmp02/e03 = "ZZZ"
+!	|	Each  047: 	{
+!	|	Each  048: 		$SV_NAD_CN_LOCCODE = @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/cmp02/e01;
+!	|	Each  049: 	}	
+!	|	Each  050: 	}
+!	|	Each  051: 	if @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/e01 = "PW"
+!	|	Each  052: 	{
+!	|	Each  053: 	$SV_NAD_PW_COUNTRY = @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/e09;
+!	|	Each  054: 	if @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/cmp02/e03 = "ZZZ"
+!	|	Each  055: 	{
+!	|	Each  056: 		$SV_NAD_PW_LOCCODE = @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/cmp02/e01;
+!	|	Each  057: 	}
+!	|	Each  058: 	$SV_NAD_PW_LEFT6NAME = DMU.Left(@/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/cmp04/e01,6);
+!	|	Each  059: 	$SV_NAD_PW_LEFT6NAME = SL_STRING.ToUpper($SV_NAD_PW_LEFT6NAME);
+!	|	Each  060: 	}
+!	|	Each  061: 	if @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/e01 = "DP"
+!	|	Each  062: 	{
+!	|	Each  063: 	$SV_NAD_DP_COUNTRY = @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/e09;
+!	|	Each  064: 	if @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/cmp02/e03 = "ZZZ"
+!	|	Each  065: 	{
+!	|	Each  066: 		$SV_NAD_DP_LOCCODE = @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNI_LOOP[1]/NAD_LOOP[$i]/NAD/cmp02/e01;
+!	|	Each  067: 	}
+!	|	Each  068: 	}
+!	|	Each  069: }
+!	|	Each  070: 
+!	|	Each  071: $lv_sql_select = "SELECT G.GROUPID_TEST_RESULT, G.GROUPID_PROD_RESULT, G.SIMSID_TEST_RESULT, G.SIMSID_PROD_RESULT, G.ACCESSKEY_TEST_RESULT, G.ACCESSKEY_PROD_RESULT, G.MORE_SERVICE_INFO_RESULT, G.SGI_LOCID_RESULT, G.SHIPPING_LINE_TRIGGER_RESULT, P.PARTNERID_CZ_RESULT, P.PARTNERID_CN_RESULT, P.PARTNERID_PW_RESULT, P.PARTNERID_DP_RESULT, T.PURPOSE_CODE_RESULT FROM ( SELECT TT.TARGET_SYSTEM_ID_RESULT, TT.PURPOSE_CODE_RESULT FROM ( SELECT TTT.TARGET_SYSTEM_ID_RESULT, TTT.PURPOSE_CODE_RESULT FROM DYN_DANFTSO4IS_TARGET_SYSTEM TTT WHERE ( TTT.NAD_CZ_COUNTRY_CONDITION = '" & $SV_NAD_CZ_COUNTRY & "' OR TTT.NAD_CZ_COUNTRY_CONDITION IS NULL ) AND ( TTT.NAD_CN_COUNTRY_CONDITION = '" & $SV_NAD_CN_COUNTRY & "' OR TTT.NAD_CN_COUNTRY_CONDITION IS NULL ) AND ( TTT.NAD_PW_COUNTRY_CONDITION = '" & $SV_NAD_PW_COUNTRY & "' OR TTT.NAD_PW_COUNTRY_CONDITION IS NULL ) AND ( TTT.NAD_DP_COUNTRY_CONDITION = '" & $SV_NAD_DP_COUNTRY & "' OR TTT.NAD_DP_COUNTRY_CONDITION IS NULL ) AND ( TTT.NAD_CZ_LOCCODE_CONDITION = '" & $SV_NAD_CZ_LOCCODE & "' OR TTT.NAD_CZ_LOCCODE_CONDITION IS NULL ) AND ( TTT.NAD_CN_LOCCODE_CONDITION = '" & $SV_NAD_CN_LOCCODE & "' OR TTT.NAD_CN_LOCCODE_CONDITION IS NULL ) AND ( TTT.NAD_PW_LOCCODE_CONDITION = '" & $SV_NAD_PW_LOCCODE & "' OR TTT.NAD_PW_LOCCODE_CONDITION IS NULL ) AND ( TTT.NAD_DP_LOCCODE_CONDITION = '" & $SV_NAD_DP_LOCCODE & "' OR TTT.NAD_DP_LOCCODE_CONDITION IS NULL ) AND ( TTT.NAD_PW_LEFT6NAME_CONDITION = '" & $SV_NAD_PW_LEFT6NAME & "' OR TTT.NAD_PW_LEFT6NAME_CONDITION IS NULL ) ORDER BY TTT.PRIORITY ASC NULLS LAST, TTT.NAD_CZ_COUNTRY_CONDITION ASC NULLS LAST, TTT.NAD_CN_COUNTRY_CONDITION ASC NULLS LAST, TTT.NAD_PW_COUNTRY_CONDITION ASC NULLS LAST, TTT.NAD_DP_COUNTRY_CONDITION ASC NULLS LAST, TTT.NAD_CZ_LOCCODE_CONDITION ASC NULLS LAST, TTT.NAD_PW_LOCCODE_CONDITION ASC NULLS LAST, TTT.NAD_CN_LOCCODE_CONDITION ASC NULLS LAST, TTT.NAD_DP_LOCCODE_CONDITION ASC NULLS LAST, TTT.NAD_PW_LEFT6NAME_CONDITION ASC NULLS LAST ) TT WHERE ROWNUM = 1 ) T INNER JOIN DYN_DANFTSO4IS_GROUP_ID G ON T.TARGET_SYSTEM_ID_RESULT = G.TARGET_SYSTEM_ID_CONDITION LEFT OUTER JOIN ( SELECT PP.TARGET_SYSTEM_ID_CONDITION, PP.PARTNERID_CZ_RESULT, PP.PARTNERID_CN_RESULT, PP.PARTNERID_PW_RESULT, PP.PARTNERID_DP_RESULT FROM ( SELECT PPP.TARGET_SYSTEM_ID_CONDITION, PPP.PARTNERID_CZ_RESULT, PPP.PARTNERID_CN_RESULT, PPP.PARTNERID_PW_RESULT, PPP.PARTNERID_DP_RESULT FROM DYN_DANFTSO4IS_PARTNER_ID PPP WHERE ( PPP.NAD_CZ_COUNTRY_CONDITION = '" & $SV_NAD_CZ_COUNTRY & "' OR PPP.NAD_CZ_COUNTRY_CONDITION IS NULL ) AND ( PPP.NAD_CN_COUNTRY_CONDITION = '" & $SV_NAD_CN_COUNTRY & "' OR PPP.NAD_CN_COUNTRY_CONDITION IS NULL ) AND ( PPP.NAD_PW_COUNTRY_CONDITION = '" & $SV_NAD_PW_COUNTRY & "' OR PPP.NAD_PW_COUNTRY_CONDITION IS NULL ) AND ( PPP.NAD_DP_COUNTRY_CONDITION = '" & $SV_NAD_DP_COUNTRY & "' OR PPP.NAD_DP_COUNTRY_CONDITION IS NULL ) AND ( PPP.NAD_CZ_LOCCODE_CONDITION = '" & $SV_NAD_CZ_LOCCODE & "' OR PPP.NAD_CZ_LOCCODE_CONDITION IS NULL ) AND ( PPP.NAD_CN_LOCCODE_CONDITION = '" & $SV_NAD_CN_LOCCODE & "' OR PPP.NAD_CN_LOCCODE_CONDITION IS NULL ) AND ( PPP.NAD_PW_LOCCODE_CONDITION = '" & $SV_NAD_PW_LOCCODE & "' OR PPP.NAD_PW_LOCCODE_CONDITION IS NULL ) AND ( PPP.NAD_DP_LOCCODE_CONDITION = '" & $SV_NAD_DP_LOCCODE & "' OR PPP.NAD_DP_LOCCODE_CONDITION IS NULL ) AND ( PPP.NAD_PW_LEFT6NAME_CONDITION = '" & $SV_NAD_PW_LEFT6NAME & "' OR PPP.NAD_PW_LEFT6NAME_CONDITION IS NULL ) ORDER BY PRIORITY ASC NULLS LAST, PPP.TARGET_SYSTEM_ID_CONDITION ASC NULLS LAST, PPP.NAD_CZ_COUNTRY_CONDITION ASC NULLS LAST, PPP.NAD_CN_COUNTRY_CONDITION ASC NULLS LAST, PPP.NAD_PW_COUNTRY_CONDITION ASC NULLS LAST, PPP.NAD_DP_COUNTRY_CONDITION ASC NULLS LAST, PPP.NAD_CZ_LOCCODE_CONDITION ASC NULLS LAST, PPP.NAD_PW_LOCCODE_CONDITION ASC NULLS LAST, PPP.NAD_CN_LOCCODE_CONDITION ASC NULLS LAST, PPP.NAD_DP_LOCCODE_CONDITION ASC NULLS LAST, PPP.NAD_PW_LEFT6NAME_CONDITION ASC NULLS LAST ) PP WHERE ROWNUM = 1 ) P ON T.TARGET_SYSTEM_ID_RESULT = P.TARGET_SYSTEM_ID_CONDITION";
+!	|	Each  072: 
+!	|	Each  073: IF $SV_LOG_MODE = "Y"
+!	|	Each  074: {
+!	|	Each  075: LOG "\n";
+!	|	Each  076: LOG "=========================\n";
+!	|	Each  077: LOG "Parameters for SQL query:\n";
+!	|	Each  078: LOG "=========================\n";
+!	|	Each  079: LOG "$SV_NAD_CN_COUNTRY = " & $SV_NAD_CN_COUNTRY & "\n";
+!	|	Each  080: LOG "$SV_NAD_CN_LOCCODE = " & $SV_NAD_CN_LOCCODE & "\n";
+!	|	Each  081: LOG "$SV_NAD_CZ_COUNTRY = " & $SV_NAD_CZ_COUNTRY & "\n";
+!	|	Each  082: LOG "$SV_NAD_CZ_LOCCODE = " & $SV_NAD_CZ_LOCCODE & "\n";
+!	|	Each  083: LOG "$SV_NAD_DP_COUNTRY = " & $SV_NAD_DP_COUNTRY & "\n";
+!	|	Each  084: LOG "$SV_NAD_DP_LOCCODE = " & $SV_NAD_DP_LOCCODE & "\n";
+!	|	Each  085: LOG "$SV_NAD_PW_COUNTRY = " & $SV_NAD_PW_COUNTRY & "\n";
+!	|	Each  086: LOG "$SV_NAD_PW_LEFT6NAME = " & $SV_NAD_PW_LEFT6NAME & "\n";
+!	|	Each  087: LOG "$SV_NAD_PW_LOCCODE = " & $SV_NAD_PW_LOCCODE & "\n";
+!	|	Each  088: LOG "\n";
+!	|	Each  089: LOG "==============\n";
+!	|	Each  090: LOG "Raw SQL query:\n";
+!	|	Each  091: LOG "==============\n";
+!	|	Each  092: LOG "$lv_sql_select = " & $lv_sql_select & "\n";
+!	|	Each  093: LOG "\n";
+!	|	Each  094: }
+!	|	Each  095: 
+!	|	Each  096: $la_params = sag_db.GetGenericValues($lv_sql_select);
+!	|	Each  097: 
+!	|	Each  098: if ARRAYSIZE($la_params)>0
+!	|	Each  099: {
+!	|	Each  100: $SV_GROUPID_TEST 		= $la_params[1][1];
+!	|	Each  101: $SV_GROUPID_PROD 		= $la_params[1][2];
+!	|	Each  102: $SV_SIMSID_TEST 		= $la_params[1][3];
+!	|	Each  103: $SV_SIMSID_PROD 		= $la_params[1][4];
+!	|	Each  104: $SV_ACCESSKEY_TEST 		= $la_params[1][5];
+!	|	Each  105: $SV_ACCESSKEY_PROD 		= $la_params[1][6];
+!	|	Each  106: $SV_MORE_SERVICE_INFO 	= $la_params[1][7];
+!	|	Each  107: $SV_SGI_LOCID 		= $la_params[1][8];
+!	|	Each  108: $SV_SHIPPING_LINE_TRIGGER 	= $la_params[1][9];
+!	|	Each  109: $SV_PARTNERID_CZ 		= $la_params[1][10];
+!	|	Each  110: $SV_PARTNERID_CN 		= $la_params[1][11];
+!	|	Each  111: $SV_PARTNERID_PW 		= $la_params[1][12];
+!	|	Each  112: $SV_PARTNERID_DP 		= $la_params[1][13];
+!	|	Each  113: $SV_PURPOSE_CODE_RESULT	= $la_params[1][14];
+!	|	Each  114: }
+!	|	Each  115: 
+!	|	Each  116: 
+!	|	Each  117: IF $SV_LOG_MODE = "Y"
+!	|	Each  118: {
+!	|	Each  119: LOG "\n";
+!	|	Each  120: LOG "================+\n";
+!	|	Each  121: LOG "SQL Query Result:\n";
+!	|	Each  122: LOG "================+\n";
+!	|	Each  123: LOG "$SV_GROUPID_TEST = " 		& $SV_GROUPID_TEST 		& "\n";
+!	|	Each  124: LOG "$SV_GROUPID_PROD = " 		& $SV_GROUPID_PROD 		& "\n";
+!	|	Each  125: LOG "$SV_SIMSID_TEST = " 		& $SV_SIMSID_TEST 		& "\n";
+!	|	Each  126: LOG "$SV_SIMSID_PROD = " 		& $SV_SIMSID_PROD 		& "\n";
+!	|	Each  127: LOG "$SV_ACCESSKEY_TEST = " 	& $SV_ACCESSKEY_TEST 	& "\n";
+!	|	Each  128: LOG "$SV_ACCESSKEY_PROD = " 	& $SV_ACCESSKEY_PROD 	& "\n";
+!	|	Each  129: LOG "$SV_MORE_SERVICE_INFO = " 	& $SV_MORE_SERVICE_INFO & "\n";
+!	|	Each  130: LOG "$SV_SGI_LOCID = " 			& $SV_SGI_LOCID 		& "\n";
+!	|	Each  131: LOG "$SV_PARTNERID_CZ = " 		& $SV_PARTNERID_CZ 		& "\n";
+!	|	Each  132: LOG "$SV_PARTNERID_CN = " 		& $SV_PARTNERID_CN 		& "\n";
+!	|	Each  133: LOG "$SV_PARTNERID_PW = " 		& $SV_PARTNERID_PW 		& "\n";
+!	|	Each  134: LOG "$SV_PARTNERID_DP = " 		& $SV_PARTNERID_DP 		& "\n";
+!	|	Each  135: LOG "\n";
+!	|	Each  136: }
+!	|	Each  137: 
+!	|	Each  138:  if $INSTANCE_FLAG = "PROD"
+!	|	Each  139:  {
+!	|	Each  140:  $SV_ProjectID 	= $SV_GROUPID_PROD	;
+!	|	Each  141:  $SV_SimsID 	= $SV_SIMSID_PROD	;
+!	|	Each  142:  $SV_AccessKey 	= $SV_ACCESSKEY_PROD;
+!	|	Each  143:  } 
+!	|	Each  144:  else
+!	|	Each  145:  {
+!	|	Each  146:  $SV_ProjectID 	= $SV_GROUPID_TEST	;
+!	|	Each  147:  $SV_SimsID 	= $SV_SIMSID_TEST	;
+!	|	Each  148:  $SV_AccessKey 	= $SV_ACCESSKEY_TEST;
+!	|	Each  149:  }
+|	+--- EDI_HEADERS (EDIFACT HEADER) ===D=(1, 1)===[2]=======>> ShippingOrder
+|	|	+--- UNB (Interchange header) ===C=(1, 1)===[3]=======/> ShippingOrder
+|	|	|		 e05 (Interchange control reference (0020)) ----------[4]----E------> majorVersionNr
+!	|	|	|	|	DLN Expr: "4"
+|	|	|		 e05 (Interchange control reference (0020)) ----------[5]----E------> minorVersionNr
+!	|	|	|	|	DLN Expr: "115"
+|	|	|		 e05 (Interchange control reference (0020)) ----------[6]----E------> releaseGuide
+!	|	|	|	|	DLN Expr: "00.00"
+|	|	\___
+|	|	+--- UNH_Doc_LOOP->UNH_DOC_LOOP ===D=(Each, Each)===[7]=======>> SEQUENCE1
+!	|	|	|	Each  001: $SV_ShippingLineCounter = 0;
+!	|	|	|	Each  002: $sv_packageType = "";
+!	|	|	|	Each  003: for $k=1 to 9
+!	|	|	|	Each  004:  {
+!	|	|	|	Each  005:  for $i=1 to 9
+!	|	|	|	Each  006:   {
+!	|	|	|	Each  007:   if @TDT_LOOP[$k]/NAD_LOOP[$i]/NAD/e01 = "CA"
+!	|	|	|	Each  008:    { 
+!	|	|	|	Each  009:    if @TDT_LOOP[$k]/NAD_LOOP[$i]/NAD/cmp02/e01 = "SCH30"
+!	|	|	|	Each  010:     {
+!	|	|	|	Each  011:     $sv_packageType = "EP";
+!	|	|	|	Each  012:     }
+!	|	|	|	Each  013:    else if @TDT_LOOP[$k]/NAD_LOOP[$i]/NAD/cmp02/e01 = "SCH71"
+!	|	|	|	Each  014:     {
+!	|	|	|	Each  015:     $sv_packageType = "CT";
+!	|	|	|	Each  016:     }
+!	|	|	|	Each  017:    }
+!	|	|	|	Each  018:   }
+!	|	|	|	Each  019:  }
+|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, 1)===[8]=======>> ApplicationArea
+|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[9]=======>> SEQUENCE1
+|	|	|	|	|		 e01 (Message reference number (0062)) ----------[10]----E------> CreationDateTime (Date and time of the creation of the message)
+!	|	|	|	|	|	|	DLN Expr: DMU.DateNow("%Y-%m-%dT%H:%M:%S.000Z")
+|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[11]=======>> MessageID (Unique Identifier for each message)
+|	|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[12]=======>> SEQUENCE1
+|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[13]----E-F----> ID (Unique Identifier for each message)
+!	|	|	|	|	|	|	|	|	DLN Expr: $lv_counter_for_id
+!	|	|	|	|	|	|	|	|	Each  001: declare $lv_counter_for_id string;
+!	|	|	|	|	|	|	|	|	Each  002: 
+!	|	|	|	|	|	|	|	|	Each  003: 
+!	|	|	|	|	|	|	|	|	Each  004: IF ($INSTANCE_FLAG = "PROD")
+!	|	|	|	|	|	|	|	|	Each  005: {
+!	|	|	|	|	|	|	|	|	Each  006: $lv_counter_for_id = "DANFOSS-" & "5" & RIGHT($SV_file_counter, 26, '0');
+!	|	|	|	|	|	|	|	|	Each  007: }
+!	|	|	|	|	|	|	|	|	Each  008: else IF ($INSTANCE_FLAG = "QA")
+!	|	|	|	|	|	|	|	|	Each  009: {
+!	|	|	|	|	|	|	|	|	Each  010: $lv_counter_for_id = "DANFOSS-" & "6" & RIGHT($SV_file_counter, 26, '0');
+!	|	|	|	|	|	|	|	|	Each  011: }
+!	|	|	|	|	|	|	|	|	Each  012: else IF ($INSTANCE_FLAG = "INT")
+!	|	|	|	|	|	|	|	|	Each  013: {
+!	|	|	|	|	|	|	|	|	Each  014: $lv_counter_for_id = "DANFOSS-" & "7" & RIGHT($SV_file_counter, 26, '0');
+!	|	|	|	|	|	|	|	|	Each  015: }
+!	|	|	|	|	|	|	|	|	Each  016: else IF ($INSTANCE_FLAG = "DEV")
+!	|	|	|	|	|	|	|	|	Each  017: {
+!	|	|	|	|	|	|	|	|	Each  018: $lv_counter_for_id = "DANFOSS-" & "8" & RIGHT($SV_file_counter, 26, '0');
+!	|	|	|	|	|	|	|	|	Each  019: }
+!	|	|	|	|	|	|	|	|	Each  020: else
+!	|	|	|	|	|	|	|	|	Each  021: {
+!	|	|	|	|	|	|	|	|	Each  022: $lv_counter_for_id = "DANFOSS-" & "9" & RIGHT($SV_file_counter, 26, '0');
+!	|	|	|	|	|	|	|	|	Each  023: }
+|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[14]----E------> RunningNumber (ssssssssrrrrrrrrtttddddddddddddddcc with ssssssss               = Sender code rrrrrrrr                  = Receiver code ttt                         = Message type dddddddddddddd = Current datetime cc                          = Counter, a two digit counter to be able to process more than    one message per second  Currently the following sender codes are defined: DEGBVOSG = Globus Germany sends voucher data  DEGBSHSH = Globus Germany sends shipment data  Currently the following receiver codes are defined: AMTMFRA_ = Amtrix is the receiver of SGI  Currently the following message types are defined: PRT = Print message)
+!	|	|	|	|	|	|	|	|	DLN Expr: "WWSWOWWNGESSGI" & DMU.DateNow("%Y%m%d%H%M%S%s") & "01"
+|	|	|	|	|	|	\___
+|	|	|	|	|	\___
+|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[15]=======>> Sender (Sender of the message)
+|	|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[16]=======>> SEQUENCE1
+|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[17]----E------> SystemID
+!	|	|	|	|	|	|	|	|	DLN Expr: "WWNGES"
+|	|	|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[18]=======>> MessageInfo
+|	|	|	|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[19]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[20]----E------> TypeOfStandard (Name of the standard)
+!	|	|	|	|	|	|	|	|	|	|	DLN Expr: "SGI"
+|	|	|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[21]----E------> Version (Identifies the version of the standard)
+!	|	|	|	|	|	|	|	|	|	|	DLN Expr: "01.00"
+|	|	|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[22]----E------> Name (Name of the message)
+!	|	|	|	|	|	|	|	|	|	|	DLN Expr: "ShippingOrder"
+|	|	|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[23]----E------> Release (The Release number of the message)
+!	|	|	|	|	|	|	|	|	|	|	DLN Expr: "1"
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- BGM (BEGINNING OF MESSAGE) ===D=(Each, Each)===[24]=======>> ReferenceID (Enables the sending application to indicate the instance identifier of the event or task that caused the BOD (Business Object Document) to be created. This allows drill back from the BOD message into the sending application. The may be required in environments where an audit trail must be maintained for all transactions.)
+|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE IDENTIFICATION (C106)) ===C=(1, 1)===[25]=======/> ReferenceID (Enables the sending application to indicate the instance identifier of the event or task that caused the BOD (Business Object Document) to be created. This allows drill back from the BOD message into the sending application. The may be required in environments where an audit trail must be maintained for all transactions.)
+|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[26]-----------> value
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	\___
+|	|	|	|	|	\___
+|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[27]=======>> Receiver (Receiver of the message)
+|	|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[28]=======>> SEQUENCE1
+|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[29]----E------> NOfReceiver (Indicate the number of receivers for the message, 9999 receivers maximum)
+!	|	|	|	|	|	|	|	|	DLN Expr: "1"
+|	|	|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[30]=======>> Receiver
+|	|	|	|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[31]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[32]----E------> SystemID
+!	|	|	|	|	|	|	|	|	|	|	DLN Expr: "WWNGES"
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	\___
+|	|	|	|	|	\___
+|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[33]=======>> TechnicalContact (Specifies the contact informations of a contact to be informed about issues during message processing.)
+|	|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===D=(1, Existing)===[34]=======>> SEQUENCE1
+|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[35]----E------> SimsID
+!	|	|	|	|	|	|	|	|	DLN Expr: $SV_SimsID
+|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[36]----E------> CompanyName
+!	|	|	|	|	|	|	|	|	DLN Expr: "Schenker"
+|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[37]----E------> LocationName (Specifies a location. The content depends on the context. Therefore it can specify 1. Location long name (eg Hamburg) or 2. Location of an address (eg. Floor 12))
+!	|	|	|	|	|	|	|	|	DLN Expr: $SV_SGI_LOCID
+|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[38]----E------> Note (Specifies a comment)
+!	|	|	|	|	|	|	|	|	DLN Expr:  $SV_AccessKey
+|	|	|	|	|	|	\___
+|	|	|	|	|	\___
+|	|	|	|	\___
+|	|	|	\___
+|	|	|	+--- BGM (BEGINNING OF MESSAGE) ===D=(Each, Each)===[39]=======>> DataArea
+|	|	|	|	+--- BGM (BEGINNING OF MESSAGE) ===D=(1, Existing)===[40]=======>> SEQUENCE1
+|	|	|	|	|	+--- BGM (BEGINNING OF MESSAGE) ===D=(1, Existing)===[41]=======>> Header (Specifies the header details of a purchase order.)
+|	|	|	|	|	|	+--- BGM (BEGINNING OF MESSAGE) ===D=(1, Existing)===[42]=======>> SEQUENCE1
+|	|	|	|	|	|	|	+--- BGM (BEGINNING OF MESSAGE) ===D=(1, Existing)===[43]=======>> Purpose
+|	|	|	|	|	|	|	|	+--- BGM (BEGINNING OF MESSAGE) ===D=(1, Existing)===[44]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	+--- BGM (BEGINNING OF MESSAGE) ===D=(1, Existing)===[45]=======>> PurposeCode
+|	|	|	|	|	|	|	|	|	|		 e03 (Message function (1225)) ----------[46]----E-F----> value
+!	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $SV_PURPOSE_CODE_RESULT
+!	|	|	|	|	|	|	|	|	|	|	|	Each  001: if $SV_PURPOSE_CODE_RESULT = "" 
+!	|	|	|	|	|	|	|	|	|	|	|	Each  002: {	
+!	|	|	|	|	|	|	|	|	|	|	|	Each  003: 	$SV_PURPOSE_CODE_RESULT=@@;
+!	|	|	|	|	|	|	|	|	|	|	|	Each  004: }
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- UNB (Interchange header) ===D=(Each, Each)===[47]=======>> Identification
+|	|	|	|	|	|	|	|	+--- UNB (Interchange header) ===D=(1, Existing)===[48]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|		 e05 (Interchange control reference (0020)) ----------[49]----E------> OrderReason (Specifies the reason of data transmission (e.g. Booking))
+!	|	|	|	|	|	|	|	|	|	|	DLN Expr: "Booking"
+|	|	|	|	|	|	|	|	|	+--- cmp01 (DOCUMENT/MESSAGE NAME (C002)) ===C=(1, 1)===[50]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|		 e01 (Document/message name (1001)) ----------[51]----E-F----> ProjectID (Project identification)
+!	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $SV_ProjectID
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	+--- cmp01 (DOCUMENT/MESSAGE NAME (C002)) ===D=(Each, Each)===[52]=======>> UniqueOrderNumber (Order identification. The type of the id depends on the order data. Therefore if shipment data is transmitted then in general the order number contains a STT-Number. If a customer sends purchase order data then the order number contains the P.O. number.)
+|	|	|	|	|	|	|	|	|	|		 e01 (Document/message name (1001)) ----------[53]----E-F----> type (todo MB: Ermitteln welche types benoetigt werden (22.4.09))
+!	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "CustomerOrderNo"
+|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE IDENTIFICATION (C106)) ===C=(1, 1)===[54]=======/> UniqueOrderNumber (Order identification. The type of the id depends on the order data. Therefore if shipment data is transmitted then in general the order number contains a STT-Number. If a customer sends purchase order data then the order number contains the P.O. number.)
+|	|	|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[55]----E-F----> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: @@
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- UNB (Interchange header) ===D=(Each, Each)===[56]=======>> ServiceRequests
+|	|	|	|	|	|	|	|	+--- UNB (Interchange header) ===D=(1, Existing)===[57]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|		 e05 (Interchange control reference (0020)) ----------[58]----E------> ServiceType (Specifies the movement conditions (Edifact code 4065) eg. door to door (27))
+!	|	|	|	|	|	|	|	|	|	|	DLN Expr: "27"
+|	|	|	|	|	|	|	|	|	+--- FTX (FREE TEXT) ===D=(Each, Each)===[59]===C===>> SpecialServiceRequests (The attribute "type" is omitted because the type SSR is assumed.)
+!	|	|	|	|	|	|	|	|	|	|	SLN Cond: @e01 = "DIN" OR @e01 = "SIC"
+|	|	|	|	|	|	|	|	|	|	+--- cmp04 (TEXT LITERAL (C108)) ===D=(Each, Each)===[60]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	+--- cmp04 (TEXT LITERAL (C108)) ===D=(1, Existing)===[61]=======>> Text (Free text)
+|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Free text value                                         [C] (4440)) ----------[62]----E------> value (Free text)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_specialservice
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_specialservice string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: 
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: if(@e05 <> "")
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005:   $lv_specialservice = @e05;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009:   $lv_specialservice = @@;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  010: }
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	+--- cmp01 (DOCUMENT/MESSAGE NAME (C002)) ===D=(Each, Each)===[63]=======>> MoreServiceInfo (The attribute "type" is omitted because the type OSI is assumed.)
+|	|	|	|	|	|	|	|	|	|	+--- cmp01 (DOCUMENT/MESSAGE NAME (C002)) ===D=(1, Existing)===[64]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	+--- cmp01 (DOCUMENT/MESSAGE NAME (C002)) ===D=(1, Existing)===[65]=======>> Text (Free text)
+|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Document/message name (1001)) ----------[66]----E-F----> value (Free text)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $SV_MORE_SERVICE_INFO
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: #FI domestic
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: if $SV_PARTNERID_CZ = "664092"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003:    or $SV_PARTNERID_CN = "664092"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004:    or $SV_PARTNERID_PW = "664092"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005:    or $SV_PARTNERID_DP = "664092"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007:   $SV_MORE_SERVICE_INFO = "43";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: #FI crossborder
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  010: else if $SV_PARTNERID_CZ = "CONTROLVAA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  011:        or $SV_PARTNERID_CN = "CONTROLVAA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  012:        or $SV_PARTNERID_PW = "CONTROLVAA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  013:        or $SV_PARTNERID_DP = "CONTROLVAA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  014: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  015:   for $i=1 to @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNT/LastOccurrence
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  016:   {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  017:     if @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNT[$i]/cmp01/e01 = "7"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  018:     {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  019:       if (@/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNT[$i]/cmp01/e03 = "KGM"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  020:         and @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNT[$i]/cmp01/e02 >= 2401
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  021:         )
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  022:         or
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  023:         (@/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNT[$i]/cmp01/e03 = "LBR"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  024:         and @/EDI_D01B_IFCSUM/UNH_DOC_LOOP/CNT[$i]/cmp01/e02 >= 5291
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  025:         )
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  026:       {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  027:         #FI crossborder heavy
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  028:         $SV_MORE_SERVICE_INFO = "72";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  029:       }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  030:       else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  031:       {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  032:         #FI crossborder light
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  033:         $SV_MORE_SERVICE_INFO = "43";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  034:       }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  035:     }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  036:   }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  037: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  038: 
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  039: #default
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  040: if $SV_MORE_SERVICE_INFO = ""
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  041: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  042:   $SV_MORE_SERVICE_INFO = "43";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  043: }
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- CNI_LOOP (SEGMENT LOOP) ===D=(1, 1)===[67]=======>> TransportConditions
+|	|	|	|	|	|	|	|	+--- TOD_LOOP (SEGMENT LOOP) ===D=(1, 1)===[68]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	+--- UNH (MESSAGE HEADER) ===C=(Each, Each)===[69]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|		 e01 (Message reference number (0062)) ----------[70]----E-F----> TransportMode
+!	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "3"
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	+--- TOD (TERMS OF DELIVERY) ===C=(1, 1)===[71]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	+--- cmp03 (TERMS OF DELIVERY (C100)) ===C=(1, 1)===[72]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|		 e01 (Terms of delivery (4053)) ----------[73]----E------> Incoterm (Incoterms (Edifact codelist 4053 and Whitebook conform) eg. CIF)
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_incoterm
+!	|	|	|	|	|	|	|	|	|	|	|	|	First 001: DECLARE $lv_incoterm String;
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: if (
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  002:     $SV_PARTNERID_CZ = "CONTROLVAA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  003:     or $SV_PARTNERID_CN = "CONTROLVAA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  004:     or $SV_PARTNERID_PW = "CONTROLVAA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  005:     or $SV_PARTNERID_DP = "CONTROLVAA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  006:     or $SV_PARTNERID_CZ = "664092"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  007:     or $SV_PARTNERID_CN = "664092"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  008:     or $SV_PARTNERID_PW = "664092"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  009:     or $SV_PARTNERID_DP = "664092"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  010:   )
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  011:   and @@="FCA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  012: {$lv_incoterm = "EXW";}
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  013: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  014: {$lv_incoterm = @@;}
+|	|	|	|	|	|	|	|	|	|	|		 e01 (Terms of delivery (4053)) ----------[74]----E-F----> IncotermLocation (Name of Incoterm location)
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_location
+!	|	|	|	|	|	|	|	|	|	|	|	|	First 001: declare $lv_location string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: $lv_location = "unknown incoterm"; 
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: 
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: if @@ = "EXW" OR @@ = "FCA" {
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: 	for $i=1 to @../../../NAD_LOOP/LastOccurrence {
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: 		if @../../../NAD_LOOP[$i]/NAD/e01 = "PW" {
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: 			$lv_location = @../../../NAD_LOOP[$i]/NAD/e06; 
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: 		}
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: 	}
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  010: else if @@="CPT" OR @@="CIP" OR @@="DPU" OR @@="DAP" OR @@="DDP" {
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  011: 	for $i=1 to @../../../NAD_LOOP/LastOccurrence {
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  012: 		if @../../../NAD_LOOP[$i]/NAD/e01 = "DP" {
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  013: 			$lv_location = @../../../NAD_LOOP[$i]/NAD/e06;  
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  014: 		}
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  015: 	}	
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  016: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  017: else if @@="FAS" OR @@="FOB" {
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  018: 	$lv_location = "Port of Loading"; 
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  019: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  020: else if @@="CFR" OR @@="CIF" {
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  021: 	$lv_location = "Port of Destination"; 
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  022: }
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	+--- UNH_Doc_LOOP->UNH_DOC_LOOP ===D=(1, Existing)===[75]=======>> NatureOfGoods (Classifies the type of cargo (Edifact codelist 7085). eg. dangerous goods=11.)
+!	|	|	|	|	|	|	|	|	|	|	Each  001: Declare $lv_natOfGoods INTEGER;
+!	|	|	|	|	|	|	|	|	|	|	Each  002: $lv_natOfGoods = 12;
+|	|	|	|	|	|	|	|	|	|	+--- CNI_LOOP (SEGMENT LOOP) ===C=(Each, Each)===[76]===C===/> NatureOfGoods (Classifies the type of cargo (Edifact codelist 7085). eg. dangerous goods=11.)
+!	|	|	|	|	|	|	|	|	|	|	|	SLN Cond: $lv_natOfGoods = 12 #continue checking next segments only if ADR or IMD is still not found
+|	|	|	|	|	|	|	|	|	|	|	+--- GID_LOOP (SEGMENT LOOP) ===C=(Each, Each)===[77]===C===/> NatureOfGoods (Classifies the type of cargo (Edifact codelist 7085). eg. dangerous goods=11.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	SLN Cond: $lv_natOfGoods = 12 #continue checking next segments only if ADR or IMD is still not found
+|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS_LOOP (SEGMENT LOOP) ===C=(Each, Each)===[78]===C===/> NatureOfGoods (Classifies the type of cargo (Edifact codelist 7085). eg. dangerous goods=11.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	SLN Cond: $lv_natOfGoods = 12 #continue checking next segments only if ADR or IMD is still not found
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===C=(Each, Each)===[79]=======/> NatureOfGoods (Classifies the type of cargo (Edifact codelist 7085). eg. dangerous goods=11.)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Dangerous goods regulations code                        [B] (8273)) ----------[80]---CE-F----> value (Classifies the type of cargo (Edifact codelist 7085). eg. dangerous goods=11.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: $lv_natOfGoods = 12 #continue checking next segments only if ADR or IMD is still not found
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_natOfGoods
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: if  @e01 = "ADR" or @e01 = "IMD" {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: $lv_natOfGoods = 11;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- UNB (Interchange header) ===D=(Each, Each)===[81]=======>> Characteristics (Specifies the characteristics of the P.O. on header level)
+|	|	|	|	|	|	|	|	+--- UNB (Interchange header) ===D=(1, Existing)===[82]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	+--- UNB (Interchange header) ===D=(1, Existing)===[83]=======>> Characteristic
+|	|	|	|	|	|	|	|	|	|		 e05 (Interchange control reference (0020)) ----------[84]----E------> value
+!	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "Pickup"
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- TDT_LOOP (SEGMENT LOOP) ===C=(Each, Each)===[85]=======/> DateTime (The structure contains Datetime values (e.g. Latest Delivery, Shipping Window, …). which belong to the whole P.O..)
+|	|	|	|	|	|	|	|	+--- LOC_LOOP (SEGMENT LOOP) ===C=(Each, Each)===[86]=======/> DateTime (The structure contains Datetime values (e.g. Latest Delivery, Shipping Window, …). which belong to the whole P.O..)
+|	|	|	|	|	|	|	|	|	+--- DTM (DATE/TIME/PERIOD) ===D=(Each, Each)===[87]=======>> DateTime (The structure contains Datetime values (e.g. Latest Delivery, Shipping Window, …). which belong to the whole P.O..)
+|	|	|	|	|	|	|	|	|	|	+--- cmp01 (DATE/TIME/PERIOD (C507)) ===C=(1, 1)===[88]=======/> DateTime (The structure contains Datetime values (e.g. Latest Delivery, Shipping Window, …). which belong to the whole P.O..)
+|	|	|	|	|	|	|	|	|	|	|		 e01 (Date or time or period function code qualifier          [C] (2005)) ----------[89]----E------> type (64)
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_DateTimeType
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: DECLARE $lv_DateTimeType string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: $lv_DateTimeType = "";
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: if @@ = "132"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  004:  {
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  005:  $lv_DateTimeType = "2";
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  006:  }
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: else if @@ = "133"
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  008:  {
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  009:  $lv_DateTimeType = "200";
+!	|	|	|	|	|	|	|	|	|	|	|	|	Each  010:  }
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	+--- cmp01 (DATE/TIME/PERIOD (C507)) ===D=(Each, Each)===[90]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|		 e02 (Date or time or period value                            [C] (2380)) ----------[91]---CE------> Date (Specifies a date value (Format: YYYY-MM-DD[Z|(+|-)hh:mm] ISO 8601 After the date the delta hours/minutes to UTC can be specified If only a time frame is known then the elements datetime_from and datetime_to have to be used.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: 0=1
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: DMU.DateConvert(@@,"%Y%m%d%H%M","%Y-%m-%d")
+|	|	|	|	|	|	|	|	|	|	|		 e02 (Date or time or period value                            [C] (2380)) ----------[92]----E------> DateTimeFrom (Specifies the from date and time within a time frame. Datetime value with timezone specification. If UTC then only Z has to be specified after the time value.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: DMU.DateConvert(@@,"%Y%m%d%H%M","%Y-%m-%dT%H:%M:00.000Z")
+|	|	|	|	|	|	|	|	|	|	|		 e02 (Date or time or period value                            [C] (2380)) ----------[93]----E------> DateTimeTo (Specifies the from date and time within a time frame. Datetime value with timezone specification. If UTC then only Z has to be specified after the time value.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: DMU.DateConvert(@@,"%Y%m%d%H%M","%Y-%m-%dT23:59:59.000Z")
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- CNI_LOOP (SEGMENT LOOP) ===C=(1, 1)===[94]=======/> Partner (Supplier, Customer, Delivering Party, Responsilble, origin, etc.)
+|	|	|	|	|	|	|	|	+--- NAD_LOOP (SEGMENT LOOP) ===D=(Each, Each)===[95]===C===>> Partner (Supplier, Customer, Delivering Party, Responsilble, origin, etc.)
+!	|	|	|	|	|	|	|	|	|	SLN Cond: @../NAD_LOOP/NAD/cmp02/e01 <> ""
+|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===C=(1, 1)===[96]=======/> Partner (Supplier, Customer, Delivering Party, Responsilble, origin, etc.)
+|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[97]-----------> roleCode
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(Each, Each)===[98]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[99]=======>> Address
+|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[100]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[101]=======>> AddressDetails (Specifies the language specific address data)
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[102]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[103]=======>> AddressDetailShared
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[104]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[105]==F====>> Name (Specifies the name)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[106]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[107]----E-F----> Name
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_nad_name
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	First 001: declare $lv_nad_name string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: if @cmp04/e01 <> ""
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: $lv_nad_name = @cmp04/e01;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: $lv_nad_name = "-";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[108]----E-F----> Index (Indicates the sequence of the name element)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "1"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[109]===C===>> Name->Name_Index2_CN_DP_PW_CZ (Specifies the name)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	SLN Cond: @cmp04/e02 <> "" AND (@e01="CZ" OR @e01="CN" OR @e01="DP" OR @e01="PW")
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[110]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[111]----E-F----> Name
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_nad_name2
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	First 001: declare $lv_nad_name2 string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: $lv_nad_name2 = @cmp04/e02;
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[112]----E-F----> Index (Indicates the sequence of the name element)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "2"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[113]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[114]=======>> Physical
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[115]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[116]----E-F----> PostalCode (Postal code of the town)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_nad_postal_code
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_nad_postal_code string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: if @e08 <> ""
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: $lv_nad_postal_code = @e08;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: $lv_nad_postal_code = "-";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[117]=======>> Country
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[118]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[119]----E-F----> AlphaTwoDigitCode
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_nad_country_code
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_nad_country_code string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: if @e09 <> ""
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: $lv_nad_country_code = @e09;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: $lv_nad_country_code = "-";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[120]----E-F----> CountryName
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_nad_country_code
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_nad_country_code string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: if @e09 <> ""
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: $lv_nad_country_code = @e09;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: $lv_nad_country_code = "-";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[121]=======>> City
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[122]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[123]----E-F----> CityName
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_nad_city_name
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_nad_city_name string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: if @e06 <> ""
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: $lv_nad_city_name = @e06;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: $lv_nad_city_name = "-";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[124]----E-F----> Language
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_nad_language
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_nad_language string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: if @e09 <> ""
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: $lv_nad_language = @e09;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: $lv_nad_language = "-";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[125]=======>> Street (Name of the street)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[126]----E-F----> value (Name of the street)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_nad_street
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_nad_street string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: if @cmp05/e01 <> ""
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: $lv_nad_street = @cmp05/e01;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: $lv_nad_street = "-";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[127]=======>> Country
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[128]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[129]----E-F----> AlphaTwoDigitCode
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_nad_country_code
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_nad_country_code string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: if @e09 <> ""
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: $lv_nad_country_code = @e09;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: $lv_nad_country_code = "-";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	+--- CTA_LOOP (SEGMENT LOOP) ===D=(Each, Each)===[130]=======>> Contact (Specifies all details regarding a contact person (Name, position, phone, email...))
+|	|	|	|	|	|	|	|	|	|	|	+--- CTA (CONTACT INFORMATION) ===D=(Each, Each)===[131]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DEPARTMENT OR EMPLOYEE DETAILS (C056)) ===D=(Each, Each)===[132]=======>> Name
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DEPARTMENT OR EMPLOYEE DETAILS (C056)) ===D=(1, Existing)===[133]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Department or employee (3412)) ----------[134]-----------> Name (Name of the contact person. Contains the same as given_name, middle_name and surname but in one field.)
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- COM (COMMUNICATION CONTACT) ===D=(Each, Each)===[135]=======>> ContactCommunication
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp01 (COMMUNICATION CONTACT (C076)) ===D=(Each, Each)===[136]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Communication channel qualifier (3155)) ----------[137]----E------> Type (Communication means type)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_contact
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_contact string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: 
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: if(@@ = "SM")
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: $lv_contact = "AL";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: $lv_contact = @@;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  010: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		            e01 (Communication number (3148)) ----------[138]-----------> CommID (Number or text identifying the communication connection (eg. telephone number, email address))
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	+--- NAD (NAME AND ADDRESS) ===D=(1, Existing)===[139]===C===>> PartnerID (Partner Id in a foreign or Schenker system (e.g. ID in accounting system))
+!	|	|	|	|	|	|	|	|	|	|	|	SLN Cond: (@e01 = "CZ" AND $SV_PARTNERID_CZ <> "") OR (@e01 = "CN" AND $SV_PARTNERID_CN <> "") OR (@e01 = "PW" AND $SV_PARTNERID_PW <> "") OR (@e01 = "DP" AND $SV_PARTNERID_DP <> "")
+|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[140]----E------> agencyID (Owner of the partner id (e.g. Schenker, DUNS, Customs))
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "AnyForeign"
+|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[141]----E------> systemID (Specifies the Schenker application which is the owner of the partner ID)
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "WWNGES"
+|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[142]---CE------> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @@ = "CZ"
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $SV_PARTNERID_CZ
+|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[143]---CE------> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @@ = "CN"
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $SV_PARTNERID_CN
+|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[144]---CE------> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @@ = "PW"
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $SV_PARTNERID_PW
+|	|	|	|	|	|	|	|	|	|	|		 e01 (Party qualifier (3035)) ----------[145]---CE------> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @@ = "DP"
+!	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $SV_PARTNERID_DP
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- BGM (BEGINNING OF MESSAGE) ===D=(Each, Each)===[146]=======>> References->References_XRF_SRS (References)
+|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE IDENTIFICATION (C106)) ===C=(1, 1)===[147]=======/> References->References_XRF_SRS (References)
+|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[148]----E------> type
+!	|	|	|	|	|	|	|	|	|	|	DLN Expr: "XRF:SRS" #For countries like France
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE IDENTIFICATION (C106)) ===D=(Each, Each)===[149]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE IDENTIFICATION (C106)) ===D=(Each, Each)===[150]=======>> ReferenceID
+|	|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[151]-----------> value
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- CNI_LOOP (SEGMENT LOOP) ===D=(Each, Each)===[152]=======>> References->References_XRF_DON (References)
+|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===C=(1, 1)===[153]=======/> References->References_XRF_DON (References)
+|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===C=(1, 1)===[154]=======/> References->References_XRF_DON (References)
+|	|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[155]----E------> type
+!	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "XRF:DON" #all SAP References from all CNI loops are created for each shipment (grourping by CNI or GID is irrelevant)
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===D=(Each, Each)===[156]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===D=(1, Existing)===[157]=======>> ReferenceID
+|	|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[158]-----------> value
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- CNI_LOOP (SEGMENT LOOP) ===D=(Each, Each)===[159]=======>> References->References_XRF_CG (References)
+|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===C=(1, 1)===[160]=======/> References->References_XRF_CG (References)
+|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===C=(1, 1)===[161]=======/> References->References_XRF_CG (References)
+|	|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[162]----E------> type
+!	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "CG"
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===D=(Each, Each)===[163]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===D=(1, Existing)===[164]=======>> ReferenceID
+|	|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[165]-----------> value
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- CNT (CONTROL TOTAL) ===D=(Each, Each)===[166]===C===>> Measures (Specifies total measurements (eg. gross weight, volume))
+!	|	|	|	|	|	|	|	|	SLN Cond: @cmp01/e01 = "7" or @cmp01/e01 = "15" or @cmp01/e01 = "57"
+|	|	|	|	|	|	|	|	+--- cmp01 (CONTROL (C270)) ===C=(1, 1)===[167]=======/> Measures (Specifies total measurements (eg. gross weight, volume))
+|	|	|	|	|	|	|	|	|		 e01 (Control total type code qualifier                       [B] (6069)) ----------[168]----E------> type (Specifies the type of measure (eg. Volume))
+!	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_typeMeasure
+!	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_typeMeasure string;
+!	|	|	|	|	|	|	|	|	|	|	Each  002: 
+!	|	|	|	|	|	|	|	|	|	|	Each  003: if(@@ = "7")
+!	|	|	|	|	|	|	|	|	|	|	Each  004: {
+!	|	|	|	|	|	|	|	|	|	|	Each  005:   $lv_typeMeasure = "G";
+!	|	|	|	|	|	|	|	|	|	|	Each  006: }
+!	|	|	|	|	|	|	|	|	|	|	Each  007: else if(@@ = "15")
+!	|	|	|	|	|	|	|	|	|	|	Each  008: {
+!	|	|	|	|	|	|	|	|	|	|	Each  009:   $lv_typeMeasure = "ABJ";
+!	|	|	|	|	|	|	|	|	|	|	Each  010: }
+!	|	|	|	|	|	|	|	|	|	|	Each  011: else if(@@ = "57")
+!	|	|	|	|	|	|	|	|	|	|	Each  012: {
+!	|	|	|	|	|	|	|	|	|	|	Each  013:   $lv_typeMeasure = "ACV";
+!	|	|	|	|	|	|	|	|	|	|	Each  014: }
+!	|	|	|	|	|	|	|	|	|	|	Each  015: else
+!	|	|	|	|	|	|	|	|	|	|	Each  016: {
+!	|	|	|	|	|	|	|	|	|	|	Each  017:   $lv_typeMeasure = "NoUnits";
+!	|	|	|	|	|	|	|	|	|	|	Each  018: }
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	+--- cmp01 (CONTROL (C270)) ===D=(Each, Each)===[169]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|		 e01 (Control total type code qualifier                       [B] (6069)) ----------[170]----E-F----> TypeClassification (Classifies a measure in detail (eg. Actual, Expected, Ordered))
+!	|	|	|	|	|	|	|	|	|	|	DLN Expr: "Ordered"
+|	|	|	|	|	|	|	|	|	+--- cmp01 (CONTROL (C270)) ===D=(1, Existing)===[171]=======>> MeasureValue
+|	|	|	|	|	|	|	|	|	|		 e03 (Measurement unit code                                   [C] (6411)) ----------[172]----E------> unit
+!	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_unitMeasure
+!	|	|	|	|	|	|	|	|	|	|	|	Each  001: declare $lv_unitMeasure string;
+!	|	|	|	|	|	|	|	|	|	|	|	Each  002: 
+!	|	|	|	|	|	|	|	|	|	|	|	Each  003: if(@@ = "KGM")
+!	|	|	|	|	|	|	|	|	|	|	|	Each  004: {
+!	|	|	|	|	|	|	|	|	|	|	|	Each  005:   $lv_unitMeasure = "KGM";
+!	|	|	|	|	|	|	|	|	|	|	|	Each  006: }
+!	|	|	|	|	|	|	|	|	|	|	|	Each  007: else if(@@ = "MTQ")
+!	|	|	|	|	|	|	|	|	|	|	|	Each  008: {
+!	|	|	|	|	|	|	|	|	|	|	|	Each  009:   $lv_unitMeasure = "MTQ";
+!	|	|	|	|	|	|	|	|	|	|	|	Each  010: }
+!	|	|	|	|	|	|	|	|	|	|	|	Each  011: else if(@@ = "PCE" or @e01 = "11")
+!	|	|	|	|	|	|	|	|	|	|	|	Each  012: {
+!	|	|	|	|	|	|	|	|	|	|	|	Each  013:   $lv_unitMeasure = "H87";
+!	|	|	|	|	|	|	|	|	|	|	|	Each  014: }
+!	|	|	|	|	|	|	|	|	|	|	|	Each  015: else if(@@ = "57")
+!	|	|	|	|	|	|	|	|	|	|	|	Each  016: {
+!	|	|	|	|	|	|	|	|	|	|	|	Each  017:   $lv_unitMeasure = "MTR";
+!	|	|	|	|	|	|	|	|	|	|	|	Each  018: }
+|	|	|	|	|	|	|	|	|	|		 e03 (Measurement unit code                                   [C] (6411)) ----------[173]----E------> system (Specifies the used dimesion system (IMP=Imperial, USA=US or MTC=Metric). If not specified then Metric is assumed.)
+!	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "MTC"
+|	|	|	|	|	|	|	|	|	|		 e02 (Control total value                                     [B] (6066)) ----------[174]----E------> value
+!	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: format("%.2f", @@)
+!	|	|	|	|	|	|	|	|	|	|	|	First 001: DECLARE VARIABLE $lv_weight string;
+!	|	|	|	|	|	|	|	|	|	|	|	Each  001: $lv_weight = TrimRight(@@, "0");
+!	|	|	|	|	|	|	|	|	|	|	|	Last  001: /*
+!	|	|	|	|	|	|	|	|	|	|	|	Last  002: 
+!	|	|	|	|	|	|	|	|	|	|	|	Last  003: 
+!	|	|	|	|	|	|	|	|	|	|	|	Last  004: declare $lv_sumOfKGM string;
+!	|	|	|	|	|	|	|	|	|	|	|	Last  005: 
+!	|	|	|	|	|	|	|	|	|	|	|	Last  006: #$lv_sumOfKGM = "103.50";
+!	|	|	|	|	|	|	|	|	|	|	|	Last  007: $lv_sumOfKGM = 0;
+!	|	|	|	|	|	|	|	|	|	|	|	Last  008: 
+!	|	|	|	|	|	|	|	|	|	|	|	Last  009: 
+!	|	|	|	|	|	|	|	|	|	|	|	Last  010: for $i = 1 to 999
+!	|	|	|	|	|	|	|	|	|	|	|	Last  011: {
+!	|	|	|	|	|	|	|	|	|	|	|	Last  012:  if(@/EDI_S93A_IFTMIN/UNH_Doc_LOOP[1]/GID_LOOP[$i]/GID/e01 > 0)
+!	|	|	|	|	|	|	|	|	|	|	|	Last  013:  {
+!	|	|	|	|	|	|	|	|	|	|	|	Last  014: 		for $j = 1 to 999  
+!	|	|	|	|	|	|	|	|	|	|	|	Last  015: 		{
+!	|	|	|	|	|	|	|	|	|	|	|	Last  016: 			if(@/EDI_S93A_IFTMIN/UNH_Doc_LOOP[1]/GID_LOOP[$i]/MEA_LOOP[$j]/MEA/e01 <> "")
+!	|	|	|	|	|	|	|	|	|	|	|	Last  017: 			{
+!	|	|	|	|	|	|	|	|	|	|	|	Last  018: 				if (@/EDI_S93A_IFTMIN/UNH_Doc_LOOP[1]/GID_LOOP[$i]/MEA_LOOP[$j]/MEA/cmp03/e01 = "KGM")
+!	|	|	|	|	|	|	|	|	|	|	|	Last  019: 				{
+!	|	|	|	|	|	|	|	|	|	|	|	Last  020: 						$lv_sumOfKGM = $lv_sumOfKGM +  @/EDI_S93A_IFTMIN/UNH_Doc_LOOP[1]/GID_LOOP[$i]/MEA_LOOP[$j]/MEA/cmp03/e02;
+!	|	|	|	|	|	|	|	|	|	|	|	Last  021: 				}
+!	|	|	|	|	|	|	|	|	|	|	|	Last  022: 			}		
+!	|	|	|	|	|	|	|	|	|	|	|	Last  023: 		}
+!	|	|	|	|	|	|	|	|	|	|	|	Last  024:  }
+!	|	|	|	|	|	|	|	|	|	|	|	Last  025: }
+!	|	|	|	|	|	|	|	|	|	|	|	Last  026: 
+!	|	|	|	|	|	|	|	|	|	|	|	Last  027: FORMAT('%.2f', $lv_sumOfKGM) 
+!	|	|	|	|	|	|	|	|	|	|	|	Last  028: */
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- cmp01 (DOCUMENT/MESSAGE NAME (C002)) ===D=(1, 1)===[175]=======>> Goods
+|	|	|	|	|	|	|	|	+--- cmp01 (DOCUMENT/MESSAGE NAME (C002)) ===D=(1, Existing)===[176]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	+--- cmp01 (DOCUMENT/MESSAGE NAME (C002)) ===D=(1, Existing)===[177]=======>> GoodsDescription (Specifies the goods description. The type="AAA" has to be used.)
+|	|	|	|	|	|	|	|	|	|	+--- cmp01 (DOCUMENT/MESSAGE NAME (C002)) ===D=(1, Existing)===[178]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	+--- cmp01 (DOCUMENT/MESSAGE NAME (C002)) ===D=(1, Existing)===[179]=======>> Text (Free text)
+|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Document/message name (1001)) ----------[180]----E------> value (Free text)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "finished products and parts"
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	\___
+|	|	|	|	|	\___
+|	|	|	|	|	+--- UNH_Doc_LOOP->UNH_DOC_LOOP ===D=(1, Existing)===[181]=======>> ShippingLines
+|	|	|	|	|	|	+--- UNH_Doc_LOOP->UNH_DOC_LOOP ===D=(1, Existing)===[182]=======>> SEQUENCE1
+|	|	|	|	|	|	|	+--- CNI_LOOP (SEGMENT LOOP) ===D=(Each, Each)===[183]=======>> ShippingLine->ShippingLine_CNI_Triggered
+!	|	|	|	|	|	|	|	|	Each  001: $SV_ShippingLineCounter = $SV_ShippingLineCounter + 1;
+!	|	|	|	|	|	|	|	|	Last  001: #$SV_SHIPPING_LINE_TRIGGER = "CNI"
+|	|	|	|	|	|	|	|	+--- CNI_LOOP (SEGMENT LOOP) ===D=(1, Existing)===[184]===C===>> SEQUENCE1
+!	|	|	|	|	|	|	|	|	|	SLN Cond: @GID_LOOP/GID/e01=""
+|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(Each, Each)===[185]=======>> Identification
+|	|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(1, Existing)===[186]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(1, Existing)===[187]=======>> LineItemID (Identifies a purchase order line item. Up to 9 different identifier can be specified. Each is uniquely identified by the belonging level-attribute.)
+|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Consolidation item number                               [B] (1490)) ----------[188]----E------> value (Identifies a purchase order line item. Up to 9 different identifier can be specified. Each is uniquely identified by the belonging level-attribute.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $SV_ShippingLineCounter
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===D=(Each, Each)===[189]=======>> Reference
+|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[190]----E------> type
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "XRF:SRS"
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===D=(1, Existing)===[191]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===D=(1, Existing)===[192]=======>> ReferenceID
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[193]-----------> value
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(Each, Each)===[194]=======>> PackageOutToIn
+|	|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(1, 1)===[195]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	+--- CNT (CONTROL TOTAL) ===C=(Each, Each)===[196]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp01 (CONTROL (C270)) ===C=(1, 1)===[197]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Control value (6066)) ----------[198]---C-------> NumberUnits (Number of transport equipments)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @e01="11"
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(Each, Each)===[199]=======>> CHOICE1
+|	|	|	|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(1, Existing)===[200]=======>> Package (Specifies package related information)
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(1, Existing)===[201]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Consolidation item number                               [B] (1490)) ----------[202]----E-F----> PackageTypeCode (Specifies a UN REC21 packagage type code (eg. Carton=CT) (codelist changed 21-oct-2008))
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "ZZ"
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	+--- CNT (CONTROL TOTAL) ===D=(Each, Each)===[203]===C===>> Measures->Measures1 (Measures regarding the unit)
+!	|	|	|	|	|	|	|	|	|	|	|	|	SLN Cond: @cmp01/e03 = "KGM"
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp01 (CONTROL (C270)) ===C=(1, 1)===[204]=======/> Measures->Measures1 (Measures regarding the unit)
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Control value (6066)) ----------[205]---CE------> type (Specifies the type of measure (eg. Volume))
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @e03 = "KGM"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "G"
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp01 (CONTROL (C270)) ===D=(Each, Each)===[206]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp01 (CONTROL (C270)) ===D=(1, Existing)===[207]=======>> MeasureValue
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Control value (6066)) ----------[208]---CE------> unit
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @e03 = "KGM"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "KGM"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Control value (6066)) ----------[209]----E------> system (Specifies the used dimesion system (IMP=Imperial, USA=US or MTC=Metric). If not specified then Metric is assumed.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "MTC"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Control value (6066)) ----------[210]---CE------> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @e03 = "KGM"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: TrimRight($lv_weight2,".")
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	First 001: DECLARE VARIABLE $lv_weight2 string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: $lv_weight2 = @@;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: if @e03 = "KGM"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: $lv_weight2 = TrimRight(@@, "0");
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: $lv_weight2 = TrimRight($lv_weight2, ".");
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	+--- CNT (CONTROL TOTAL) ===D=(Each, Each)===[211]===C===>> Measures->Measures2 (Measures regarding the unit)
+!	|	|	|	|	|	|	|	|	|	|	|	|	SLN Cond: @cmp01/e03 = "MTQ"
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp01 (CONTROL (C270)) ===C=(1, 1)===[212]=======/> Measures->Measures2 (Measures regarding the unit)
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Control value (6066)) ----------[213]---CE------> type (Specifies the type of measure (eg. Volume))
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @e03 = "MTQ"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "ABJ"
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp01 (CONTROL (C270)) ===D=(Each, Each)===[214]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp01 (CONTROL (C270)) ===D=(1, Existing)===[215]=======>> MeasureValue
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Control value (6066)) ----------[216]---CE------> unit
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @e03 = "MTQ"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "MTQ"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Control value (6066)) ----------[217]----E------> system (Specifies the used dimesion system (IMP=Imperial, USA=US or MTC=Metric). If not specified then Metric is assumed.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "MTC"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Control value (6066)) ----------[218]---CE------> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @e03 = "MTQ"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: TrimRight($lv_weight2,".")
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	First 001: DECLARE VARIABLE $lv_weight2 string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: $lv_weight2 = @@;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: if @e03 = "KGM"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: $lv_weight2 = TrimRight(@@, "0");
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: $lv_weight2 = TrimRight($lv_weight2, ".");
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: }
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(Each, Each)===[219]=======>> FreeText
+|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Consolidation item number                               [B] (1490)) ----------[220]----E------> type
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "AAA"
+|	|	|	|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(1, Existing)===[221]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(1, Existing)===[222]=======>> Text
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Consolidation item number                               [B] (1490)) ----------[223]----E------> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "Pallets"
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	+--- GID_LOOP (SEGMENT LOOP) ===C=(Each, Each)===[224]=======/> BarCodeID
+|	|	|	|	|	|	|	|	|	|	|	|	+--- PCI_LOOP (SEGMENT LOOP) ===C=(Each, Each)===[225]=======/> BarCodeID
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- GIN (GOODS IDENTITY NUMBER) ===D=(Each, Each)===[226]=======>> BarCodeID
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (IDENTITY NUMBER RANGE (C208)) ===D=(Each, Each)===[227]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Object identifier                                       [C] (7402)) ----------[228]-----------> BarCode (Actual bar code scanned)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	+--- GID_LOOP (SEGMENT LOOP) ===C=(Each, Each)===[229]=======/> DangerousGoods
+|	|	|	|	|	|	|	|	|	|	+--- DGS_LOOP (SEGMENT LOOP) ===D=(Each, Each)===[230]===C===>> DangerousGoods
+!	|	|	|	|	|	|	|	|	|	|	|	SLN Cond: @DGS/e01 = "ADR"
+|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===C=(1, 1)===[231]=======/> DangerousGoods
+|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[232]----E-F----> liquid
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "false"
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (HAZARD CODE (C205)) ===D=(Each, Each)===[233]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[234]----E-F----> Waste (DGS Waste Identifier If waste is shipped the element contains the string "Yes".)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "false"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[235]----E-F----> LimitedQuantity (If the qunatity of the dangerous good is a limited quantity this value must be true otherwise false. This defines that if the Goods are packed in small enough measures, then the risks relating to that carriage are reduced, because if one small package, say 2.5 Litres, leaks the risk is smaller than the leak of 50 Litre Drum.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "false"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[236]----E-F----> ExceptedQuantity (If the qunatity of the dangerous good is a excepted quantity this value must be true otherwise false. Excepted quantities must meet the maximum inner packaging weight, which ranges from 30 – 1 ml/gram depending on the product.  Maximum outer packaging range from 1000 – 300 mls/grams, again, depending on the product.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "true"
+|	|	|	|	|	|	|	|	|	|	|	|		 e05 (Packaging danger level code                             [B] (8339)) ----------[237]-----------> PackingCode (Specifies the DGS Packing Group Code. Identification of a packing group by code. Possible values are 1, 2 or 3)
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[238]----E-F----> MarinePollutant (Specifies whether marine pollutant {Yes, No}. The information is only relevant for sea transport, which means for ferry transport as well.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "false"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[239]----E-F----> TechnicalName (DGS Technical name)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "Technical Name is not known"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[240]----E-F----> ShippingName
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "Shipping Name is not known"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[241]----E-F----> PackagingCode
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "4A"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[242]----E-F----> TunnelRstrctnCode
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "D1E"
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp03 (UNDG INFORMATION (C234)) ===C=(1, 1)===[243]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (United Nations Dangerous Goods (UNDG) identifier        [B] (7124)) ----------[244]-----------> DngrsNumberUN (DG UNDG NumberUnited Nations Dangerous Goods classification. Unique serial number assigned within the U.N. to substances and articles contained in a list of the dangerous goods most commonly carried.(e.g. 1263))
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (HAZARD CODE (C205)) ===D=(1, Existing)===[245]=======>> DngrsCode (Dangerous goods code e.g. IMO class for international transportation or CFR49 codes for domestic transportation (e.g. 3.1) This information is relevant for all modes of transport. As it covers the information of "dangerous label main risk" as well, this specific information must not be entered twice.)
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Hazard identification code                              [B] (8351)) ----------[246]----E-F----> value (Dangerous goods code e.g. IMO class for international transportation or CFR49 codes for domestic transportation (e.g. 3.1) This information is relevant for all modes of transport. As it covers the information of "dangerous label main risk" as well, this specific information must not be entered twice.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "LN_" & sag_tools.ReplaceChar(@@, ".", "_")
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(Each, Each)===[247]=======>> Texte (Specifies additional text information regarding DGS. eg. Loading instructions. The type attribute is mandatory and the following values are expected: AAC, HAZ, LOI, PAC, SRN, TRA)
+|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[248]----E-F----> type
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "AAC"
+|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[249]----E-F----> languageID (de)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "en-GB"
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(1, Existing)===[250]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(1, Existing)===[251]=======>> Text
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[252]----E-F----> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "HAZ"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(Each, Each)===[253]=======>> Measures (Measurements reagrding DGS (eg. Net explosive quantity).)
+|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[254]----E-F----> type (Specifies the type of measure (eg. Volume))
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "WT"
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(1, Existing)===[255]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(1, Existing)===[256]=======>> MeasureValue
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[257]----E-F----> unit
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "KGM"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[258]----E-F----> system (Specifies the used dimesion system (IMP=Imperial, USA=US or MTC=Metric). If not specified then Metric is assumed.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "MTC"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[259]----E-F----> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "1"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(Each, Each)===[260]=======>> Quantity
+|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[261]----E-F----> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "1"
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	+--- CNI_LOOP (SEGMENT LOOP) ===C=(Each, Each)===[262]===C===/> ShippingLine->ShippingLine_GID_Triggered
+!	|	|	|	|	|	|	|	|	SLN Cond: @GID_LOOP/GID/e01<>""
+!	|	|	|	|	|	|	|	|	Last  001: #$SV_SHIPPING_LINE_TRIGGER = "GID"
+|	|	|	|	|	|	|	|	+--- GID_LOOP (SEGMENT LOOP) ===D=(Each, Each)===[263]===C===>> ShippingLine->ShippingLine_GID_Triggered
+!	|	|	|	|	|	|	|	|	|	SLN Cond: @GID/e01<>""
+!	|	|	|	|	|	|	|	|	|	Each  001: $SV_ShippingLineCounter = $SV_ShippingLineCounter + 1;
+!	|	|	|	|	|	|	|	|	|	Last  001: #$SV_SHIPPING_LINE_TRIGGER = "GID"
+|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(Each, Each)===[264]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(1, Existing)===[265]=======>> Identification
+|	|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(1, Existing)===[266]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(1, Existing)===[267]=======>> LineItemID (Identifies a purchase order line item. Up to 9 different identifier can be specified. Each is uniquely identified by the belonging level-attribute.)
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Goods item number (1496)) ----------[268]----E------> value (Identifies a purchase order line item. Up to 9 different identifier can be specified. Each is uniquely identified by the belonging level-attribute.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $SV_ShippingLineCounter
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- CNI (CONSIGNMENT INFORMATION) ===D=(Each, Each)===[269]=======>> Reference
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===C=(1, 1)===[270]=======/> Reference
+|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[271]----E------> type
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "XRF:SRS"
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===D=(Each, Each)===[272]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DOCUMENT/MESSAGE DETAILS (C503)) ===D=(1, Existing)===[273]=======>> ReferenceID
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Document identifier                                     [C] (1004)) ----------[274]-----------> value
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(1, Existing)===[275]=======>> PackageOutToIn
+|	|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(1, Existing)===[276]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (NUMBER AND TYPE OF PACKAGES (C213)) ===C=(1, 1)===[277]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Number of packages (7224)) ----------[278]-----------> NumberUnits (Number of transport equipments)
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(1, Existing)===[279]=======>> CHOICE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(1, Existing)===[280]=======>> Package (Specifies package related information)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(1, Existing)===[281]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (NUMBER AND TYPE OF PACKAGES (C213)) ===C=(1, 1)===[282]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Type of packages identification (7065)) ----------[283]----E------> PackageTypeCode (Specifies a UN REC21 packagage type code (eg. Carton=CT) (codelist changed 21-oct-2008))
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_packageTypeCode
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	First 001: DECLARE $lv_packageTypeCode String;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: if @@="CT"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003:   $lv_packageTypeCode = "CT";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: else if @@="EP"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007:   $lv_packageTypeCode = "EP";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: else if @@="PA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  010: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  011:   $lv_packageTypeCode = "XP";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  012: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  013: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  014: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  015:   $lv_packageTypeCode = "ZZ";
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  016: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Last  001: #$sv_packageType
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- DIM_LOOP (SEGMENT LOOP) ===D=(Each, Each)===[284]=======>> Dimensions
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- DIM (DIMENSIONS) ===D=(Each, Each)===[285]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (NUMBER AND TYPE OF PACKAGES (C213)) ===C=(Each, Each)===[286]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Number of packages (7224)) ----------[287]-----------> NumberOfUnits (Number of package units)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DIMENSIONS (C211)) ===D=(Each, Each)===[288]=======>> Length (Length of a package)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Measure unit qualifier (6411)) ----------[289]-----------> unit
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Measure unit qualifier (6411)) ----------[290]----E------> system (Specifies the used dimesion system (IMP=Imperial, USA=US or MTC=Metric). If not specified then Metric is assumed.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "MTC"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		       e02 (Length dimension (6168)) ----------[291]-----------> value
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DIMENSIONS (C211)) ===D=(Each, Each)===[292]=======>> Width (Width of a package)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Measure unit qualifier (6411)) ----------[293]-----------> unit
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Measure unit qualifier (6411)) ----------[294]----E------> system (Specifies the used dimesion system (IMP=Imperial, USA=US or MTC=Metric). If not specified then Metric is assumed.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "MTC"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		        e03 (Width dimension (6140)) ----------[295]-----------> value
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (DIMENSIONS (C211)) ===D=(Each, Each)===[296]=======>> Height (Height of a package)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Measure unit qualifier (6411)) ----------[297]-----------> unit
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Measure unit qualifier (6411)) ----------[298]----E------> system (Specifies the used dimesion system (IMP=Imperial, USA=US or MTC=Metric). If not specified then Metric is assumed.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "MTC"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		       e04 (Height dimension (6008)) ----------[299]-----------> value
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- MEA_LOOP (SEGMENT LOOP) ===D=(Each, Each)===[300]=======>> Measures->Measures1 (Measures regarding the unit)
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- MEA (MEASUREMENTS) ===C=(1, 1)===[301]=======/> Measures->Measures1 (Measures regarding the unit)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp03 (VALUE/RANGE (C174)) ===C=(1, 1)===[302]=======/> Measures->Measures1 (Measures regarding the unit)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Measurement unit code                                   [C] (6411)) ----------[303]---CE------> type (Specifies the type of measure (eg. Volume))
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @@ = "KGM"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "G"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Measurement unit code                                   [C] (6411)) ----------[304]---CE------> type (Specifies the type of measure (eg. Volume))
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Cond: @@ = "MTQ"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "ABJ"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp03 (VALUE/RANGE (C174)) ===D=(Each, Each)===[305]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp03 (VALUE/RANGE (C174)) ===D=(1, Existing)===[306]=======>> MeasureValue
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Measurement unit code                                   [C] (6411)) ----------[307]-----------> unit
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Measurement unit code                                   [C] (6411)) ----------[308]----E------> system (Specifies the used dimesion system (IMP=Imperial, USA=US or MTC=Metric). If not specified then Metric is assumed.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "MTC"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		                                           e02 (Measurement value (6314)) ----------[309]----E------> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_MEAvalue
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: DECLARE $lv_MEAvalue string;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: 
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: if @e01 = "KGM"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: $lv_MEAvalue = TrimRight(@@, "0");
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: {
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  009: $lv_MEAvalue = @@;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  010: }
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  011: 
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  012: $lv_MEAvalue = TrimRight($lv_MEAvalue, ".");
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(Each, Each)===[310]=======>> FreeText
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Goods item number (1496)) ----------[311]----E------> type
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "AAA"
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(1, Existing)===[312]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- GID (GOODS ITEM DETAILS) ===D=(1, Existing)===[313]=======>> Text
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Goods item number (1496)) ----------[314]----E------> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "Pallets"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- PCI_LOOP (SEGMENT LOOP) ===C=(Each, Each)===[315]=======/> BarCodeID
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- GIN (GOODS IDENTITY NUMBER) ===D=(Each, Each)===[316]=======>> BarCodeID
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (IDENTITY NUMBER RANGE (C208)) ===D=(Each, Each)===[317]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Object identifier                                       [C] (7402)) ----------[318]-----------> BarCode (Actual bar code scanned)
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	+--- DGS_LOOP (SEGMENT LOOP) ===D=(Each, Each)===[319]===C===>> DangerousGoods
+!	|	|	|	|	|	|	|	|	|	|	|	SLN Cond: @../../../GDS/cmp01/e01 = "11" and @DGS/e01="ADR"
+|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===C=(1, 1)===[320]=======/> DangerousGoods
+|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[321]----E-F----> liquid
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "false"
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (HAZARD CODE (C205)) ===D=(Each, Each)===[322]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[323]----E-F----> Waste (DGS Waste Identifier If waste is shipped the element contains the string "Yes".)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "false"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[324]----E-F----> LimitedQuantity (If the qunatity of the dangerous good is a limited quantity this value must be true otherwise false. This defines that if the Goods are packed in small enough measures, then the risks relating to that carriage are reduced, because if one small package, say 2.5 Litres, leaks the risk is smaller than the leak of 50 Litre Drum.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "false"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[325]----E-F----> ExceptedQuantity (If the qunatity of the dangerous good is a excepted quantity this value must be true otherwise false. Excepted quantities must meet the maximum inner packaging weight, which ranges from 30 – 1 ml/gram depending on the product.  Maximum outer packaging range from 1000 – 300 mls/grams, again, depending on the product.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "true"
+|	|	|	|	|	|	|	|	|	|	|	|		 e05 (Packaging danger level code                             [B] (8339)) ----------[326]-----------> PackingCode (Specifies the DGS Packing Group Code. Identification of a packing group by code. Possible values are 1, 2 or 3)
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[327]----E-F----> MarinePollutant (Specifies whether marine pollutant {Yes, No}. The information is only relevant for sea transport, which means for ferry transport as well.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "false"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[328]----E-F----> TechnicalName (DGS Technical name)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "Technical Name is not known"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[329]----E-F----> ShippingName
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "Shipping Name is not known"
+|	|	|	|	|	|	|	|	|	|	|	|		                                                         00 (Segment Tag) ----------[330]----E-F----> TunnelRstrctnCode
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "D1E"
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (NUMBER AND TYPE OF PACKAGES (C213)) ===C=(Each, Each)===[331]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e02 (Type of packages identification (7065)) ----------[332]----E-F----> PackagingCode
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: $lv_PackagingCode
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	First 001: DECLARE $lv_PackagingCode String;
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  001: if @@ = "CT"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  002: {$lv_PackagingCode = "6H";}
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  003: else if @@ = "EP"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  004: {$lv_PackagingCode = "50";}
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  005: else if @@ = "BX" or @@ = "PA"
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  006: {$lv_PackagingCode = "4A";}
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  007: else
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	Each  008: {$lv_PackagingCode = "4A";}
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp03 (UNDG INFORMATION (C234)) ===C=(1, 1)===[333]=======/> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (United Nations Dangerous Goods (UNDG) identifier        [B] (7124)) ----------[334]-----------> DngrsNumberUN (DG UNDG NumberUnited Nations Dangerous Goods classification. Unique serial number assigned within the U.N. to substances and articles contained in a list of the dangerous goods most commonly carried.(e.g. 1263))
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- cmp02 (HAZARD CODE (C205)) ===D=(1, Existing)===[335]=======>> DngrsCode (Dangerous goods code e.g. IMO class for international transportation or CFR49 codes for domestic transportation (e.g. 3.1) This information is relevant for all modes of transport. As it covers the information of "dangerous label main risk" as well, this specific information must not be entered twice.)
+|	|	|	|	|	|	|	|	|	|	|	|	|		 e01 (Hazard identification code                              [B] (8351)) ----------[336]----E-F----> value (Dangerous goods code e.g. IMO class for international transportation or CFR49 codes for domestic transportation (e.g. 3.1) This information is relevant for all modes of transport. As it covers the information of "dangerous label main risk" as well, this specific information must not be entered twice.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "LN_" & sag_tools.ReplaceChar(@@, ".", "_")
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(Each, Each)===[337]=======>> Texte (Specifies additional text information regarding DGS. eg. Loading instructions. The type attribute is mandatory and the following values are expected: AAC, HAZ, LOI, PAC, SRN, TRA)
+|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[338]----E-F----> type
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "AAC"
+|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[339]----E-F----> languageID (de)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "en-GB"
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(1, Existing)===[340]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(1, Existing)===[341]=======>> Text
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[342]----E------> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "HAZ"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(Each, Each)===[343]=======>> Measures (Measurements reagrding DGS (eg. Net explosive quantity).)
+|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[344]----E-F----> type (Specifies the type of measure (eg. Volume))
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "WT"
+|	|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(1, Existing)===[345]=======>> SEQUENCE1
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(1, Existing)===[346]=======>> MeasureValue
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[347]----E-F----> unit
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "KGM"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[348]----E-F----> system (Specifies the used dimesion system (IMP=Imperial, USA=US or MTC=Metric). If not specified then Metric is assumed.)
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "MTC"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[349]----E-F----> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "1"
+|	|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	|	+--- DGS (DANGEROUS GOODS) ===D=(Each, Each)===[350]=======>> Quantity
+|	|	|	|	|	|	|	|	|	|	|	|	|		 00 (Segment Tag) ----------[351]----E-F----> value
+!	|	|	|	|	|	|	|	|	|	|	|	|	|	|	DLN Expr: "1"
+|	|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	|	\___
+|	|	|	|	|	|	\___
+|	|	|	|	|	\___
+|	|	|	|	\___
+|	|	|	\___
+|	|	\___
+|	\___
+\___
